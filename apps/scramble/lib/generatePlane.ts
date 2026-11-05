@@ -1,6 +1,7 @@
 import { hasLongerWordWithPrefix, hasWord } from "./binarySearch";
 import { getDictionary } from "./dictionary";
 import type { Language } from "./languages";
+import { MIN_WORD_LENGTH } from "./game/rules";
 import { randomLetter } from "./letters";
 
 export interface Plane {
@@ -11,8 +12,7 @@ export interface Plane {
 }
 
 const SIZE = 4;
-const MIN_WORD_LENGTH = 3;
-const MIN_POINTS: Record<Language, number> = { fi: 7000, se: 5000 };
+const MIN_POINTS: Record<Language, number> = { fi: 7000, sv: 5000 };
 // The PHP version looped forever; keep the best attempt if the cap is hit.
 const MAX_TRIES = 500;
 

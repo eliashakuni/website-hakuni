@@ -1,8 +1,8 @@
-// Requires fi-all-words.json and se-all-words.json
+// Requires fi-all-words.json and sv-all-words.json
 
 import { readFile, writeFile } from "node:fs/promises";
 
-const LANGUAGES = ["fi", "se"];
+const LANGUAGES = ["fi", "sv"];
 
 const countLetters = (words) => {
   const letterCounts = {};

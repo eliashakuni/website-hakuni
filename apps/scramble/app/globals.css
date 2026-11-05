@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme inline {
+  --font-sans: var(--font-nunito);
+  --font-tile: var(--font-bree-serif);
+  --font-digital: var(--font-digital-clock);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-backdrop: hsl(240 20% 32%);
+  --color-backdrop-glow: hsl(243 17% 43%);
+  --color-panel: hsl(64 26% 76%);
+  --color-panel-edge: hsl(64 50% 86%);
+  --color-word-bar: hsl(64 50% 88%);
+  --color-ink: hsl(240 25% 14%);
+  --color-ink-soft: hsl(240 12% 30%);
+  --color-tile: hsl(0 0% 95%);
+  --color-tile-hover: hsl(0 0% 100%);
+  --color-tile-path: hsl(240 10% 76%);
+  --color-tile-edge: hsl(240 15% 24%);
+  --color-tile-blocked: hsl(0 60% 80%);
+  --color-dialog: hsl(223 27% 82%);
+  --color-dialog-edge: hsl(223 27% 43%);
+  --color-correct: hsl(120 85% 18%);
+  --color-incorrect: hsl(0 75% 28%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-backdrop: hsl(240 25% 9%);
+    --color-backdrop-glow: hsl(243 22% 19%);
+    --color-panel: hsl(240 16% 19%);
+    --color-panel-edge: hsl(240 14% 30%);
+    --color-word-bar: hsl(240 16% 15%);
+    --color-ink: hsl(64 30% 90%);
+    --color-ink-soft: hsl(64 8% 68%);
+    --color-tile: hsl(240 10% 27%);
+    --color-tile-hover: hsl(240 10% 34%);
+    --color-tile-path: hsl(243 28% 44%);
+    --color-tile-edge: hsl(240 18% 11%);
+    --color-tile-blocked: hsl(0 45% 36%);
+    --color-dialog: hsl(240 18% 22%);
+    --color-dialog-edge: hsl(240 14% 38%);
+    --color-correct: hsl(120 55% 70%);
+    --color-incorrect: hsl(0 80% 76%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* In the base layer so Tailwind utilities can override these. */
+@layer base {
+  body {
+    background: linear-gradient(
+      345deg,
+      var(--color-backdrop) 0%,
+      var(--color-backdrop-glow) 34%,
+      var(--color-backdrop) 100%
+    );
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: default;
+  }
+}
+
+/* Layouts: sizes come from the viewport so no JavaScript has to measure the window. */
+.screen {
+  height: 100dvh;
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 0.75rem;
+  gap: 0.75rem;
+  display: grid;
+  min-height: 0;
+}
+
+.game-screen {
+  --board-size: min(100vw - 1.5rem, 100dvh - 20rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 4rem var(--board-size) 3.5rem;
+  grid-template-areas:
+    "stats list"
+    "word word"
+    "board board"
+    "send send";
+  justify-items: stretch;
+}
+
+.results-screen {
+  --board-size: min(100vw - 1.5rem, 42dvh);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) var(--board-size);
+  grid-template-areas:
+    "stats list"
+    "board board";
+}
+
+@media (orientation: landscape) {
+  .screen {
+    max-height: 44rem;
+  }
+
+  .game-screen {
+    --board-size: min(100dvh - 11.5rem, 44vw, 30rem);
+    grid-template-columns: minmax(0, 1fr) var(--board-size) minmax(0, 1fr);
+    grid-template-rows: 4rem var(--board-size) 3.5rem;
+    grid-template-areas:
+      "word word word"
+      "stats board list"
+      "stats send list";
+    align-content: center;
+  }
+
+  .results-screen {
+    --board-size: min(50dvh, 40vw, 20rem);
+    grid-template-columns: minmax(var(--board-size), 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) var(--board-size);
+    grid-template-areas:
+      "stats list"
+      "board list";
+  }
+}
+
+/* Phones held sideways have little height, so the bars give some of theirs to the board. */
+@media (orientation: landscape) and (max-height: 480px) {
+  .screen {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .game-screen {
+    --board-size: min(100dvh - 7.5rem, 44vw);
+    grid-template-rows: 2.75rem var(--board-size) 2.75rem;
+  }
+}
+
+/* Vertically centres the capped .screen on large displays. */
+.screen-frame {
+  display: flex;
+  align-items: center;
+  height: 100dvh;
+}
+
+.area-stats { grid-area: stats; }
+.area-list { grid-area: list; }
+.area-word { grid-area: word; }
+.area-board { grid-area: board; }
+.area-send { grid-area: send; }
+
+.board {
+  height: var(--board-size);
+  width: var(--board-size);
+  margin-inline: auto;
+  container-type: size;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  /* Not cqw: on the container itself that would measure the viewport, not the board. */
+  gap: calc(var(--board-size) * 0.025);
+}
+
+.tile {
+  font-family: var(--font-tile);
+  font-size: 13cqw;
+  line-height: 1;
+  border-width: 1.6cqw;
+  border-radius: 5cqw;
+  text-transform: uppercase;
+  transition:
+    transform 150ms ease-out,
+    background-color 150ms ease-out;
+}
+
+.word-flight {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  transform-origin: top left;
+  white-space: nowrap;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Route changes slide the old view out to the left and the new one in from the right. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(.slide-view) {
+  animation: 400ms ease-in-out both slide-out;
+}
+
+::view-transition-new(.slide-view) {
+  animation: 400ms ease-in-out both slide-in;
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateX(-100vw);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    transform: translateY(-1.5rem);
+    opacity: 0;
+  }
+}
+
+dialog[open] {
+  animation: 200ms ease-out rise-in;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.slide-view),
+  ::view-transition-new(.slide-view),
+  dialog[open] {
+    animation: none;
+  }
+
+  .tile {
+    transition: none;
+  }
 }

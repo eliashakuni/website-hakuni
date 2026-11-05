@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "description": "Etsi kolmessa minuutissa niin monta sanaa kuin ehdit."
+  },
+  "start": {
+    "play": "Aloita",
+    "loading": "Ladataan...",
+    "continue": "Jatka peliä",
+    "newGame": "Uusi peli",
+    "loadFailed": "Pelilaudan lataaminen epäonnistui.",
+    "retry": "Yritä uudelleen",
+    "language": "Kieli"
+  },
+  "game": {
+    "send": "Lähetä",
+    "points": "Pisteet: {score}/{max}",
+    "words": "Sanat: {found}/{total}",
+    "timeLeft": "Aikaa jäljellä",
+    "board": "Pelilauta",
+    "guesses": "Arvaukset"
+  },
+  "results": {
+    "grade": "Tulos: {grade}",
+    "words": "Sanalista",
+    "board": "Pelilauta"
+  },
+  "grades": {
+    "0": "surkea",
+    "1": "kehno",
+    "2": "siedettävä",
+    "3": "hyväksytty",
+    "4": "kohtalainen",
+    "5": "hyvä",
+    "6": "erittäin hyvä",
+    "7": "loistava",
+    "8": "eliitti",
+    "9": "nero",
+    "perfect": "köh?"
+  },
+  "menu": {
+    "open": "Valikko",
+    "newGame": "Uusi peli",
+    "results": "Tulokset",
+    "cancel": "Peruuta",
+    "confirmResults": "Oletko varma että haluat lopettaa tämänhetkisen pelin ja nähdä tulokset?",
+    "confirmNewGame": "Oletko varma että haluat aloittaa uuden pelin? Tämänhetkinen peli päättyy."
+  },
+  "notFound": {
+    "message": "Sivua ei löytynyt.",
+    "home": "Etusivulle"
+  }
+}

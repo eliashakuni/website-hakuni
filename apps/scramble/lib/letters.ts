@@ -1,5 +1,5 @@
 import fiLetters from "./data/fi-standard-letters.json";
-import seLetters from "./data/se-standard-letters.json";
+import svLetters from "./data/sv-standard-letters.json";
 import { lowerBound } from "./binarySearch";
 import type { Language } from "./languages";
 
@@ -11,7 +11,7 @@ interface LetterTable {
 
 const letterTables: Record<Language, LetterTable> = {
   fi: fiLetters,
-  se: seLetters,
+  sv: svLetters,
 };
 
 export function randomLetter(lang: Language): string {

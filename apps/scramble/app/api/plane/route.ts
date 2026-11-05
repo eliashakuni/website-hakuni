@@ -10,7 +10,7 @@ export const maxDuration = 60;
 export async function GET(request: Request) {
   const lang = new URL(request.url).searchParams.get("lang");
   if (!isLanguage(lang)) {
-    return Response.json({ error: "lang must be 'fi' or 'se'" }, { status: 400 });
+    return Response.json({ error: "lang must be 'fi' or 'sv'" }, { status: 400 });
   }
 
   let result: Plane | undefined;

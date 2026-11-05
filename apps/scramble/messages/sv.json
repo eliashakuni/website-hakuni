@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "description": "Hitta så många ord du hinner på tre minuter."
+  },
+  "start": {
+    "play": "Starta",
+    "loading": "Laddar...",
+    "continue": "Fortsätt spelet",
+    "newGame": "Nytt spel",
+    "loadFailed": "Spelplanen kunde inte laddas.",
+    "retry": "Försök igen",
+    "language": "Språk"
+  },
+  "game": {
+    "send": "Skicka",
+    "points": "Poäng: {score}/{max}",
+    "words": "Ord: {found}/{total}",
+    "timeLeft": "Tid kvar",
+    "board": "Spelplan",
+    "guesses": "Gissningar"
+  },
+  "results": {
+    "grade": "Resultat: {grade}",
+    "words": "Ordlista",
+    "board": "Spelplan"
+  },
+  "grades": {
+    "0": "usel",
+    "1": "dålig",
+    "2": "dräglig",
+    "3": "godkänd",
+    "4": "hyfsad",
+    "5": "bra",
+    "6": "mycket bra",
+    "7": "lysande",
+    "8": "elit",
+    "9": "geni",
+    "perfect": "ähum?"
+  },
+  "menu": {
+    "open": "Meny",
+    "newGame": "Nytt spel",
+    "results": "Resultat",
+    "cancel": "Avbryt",
+    "confirmResults": "Är du säker på att du vill avsluta det pågående spelet och se resultatet?",
+    "confirmNewGame": "Är du säker på att du vill starta ett nytt spel? Det pågående spelet avslutas."
+  },
+  "notFound": {
+    "message": "Sidan hittades inte.",
+    "home": "Till startsidan"
+  }
+}
