@@ -11,6 +11,7 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "browserslist": "4.29.3",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.0",
     "next-intl": "4.14.9",
@@ -30,5 +31,8 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   },
+  "browserslist": [
+    "last 0.5 years"
+  ],
   "packageManager": "pnpm@12.11.2"
 }

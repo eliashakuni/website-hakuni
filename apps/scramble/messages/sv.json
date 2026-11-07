@@ -45,6 +45,11 @@
     "confirmResults": "Är du säker på att du vill avsluta det pågående spelet och se resultatet?",
     "confirmNewGame": "Är du säker på att du vill starta ett nytt spel? Det pågående spelet avslutas."
   },
+  "browser": {
+    "outdated": "Din webbläsare är föråldrad, så spelet kanske inte fungerar som det ska. Uppdatera din webbläsare.",
+    "dismiss": "Stäng",
+    "internetExplorer": "Internet Explorer stöds inte. Använd en modern webbläsare, till exempel Firefox, Chrome, Edge eller Safari."
+  },
   "notFound": {
     "message": "Sidan hittades inte.",
     "home": "Till startsidan"

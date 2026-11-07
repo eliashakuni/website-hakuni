@@ -45,6 +45,11 @@
     "confirmResults": "Oletko varma että haluat lopettaa tämänhetkisen pelin ja nähdä tulokset?",
     "confirmNewGame": "Oletko varma että haluat aloittaa uuden pelin? Tämänhetkinen peli päättyy."
   },
+  "browser": {
+    "outdated": "Selaimesi on vanhentunut, joten peli ei välttämättä toimi oikein. Päivitä selaimesi.",
+    "dismiss": "Sulje",
+    "internetExplorer": "Internet Explorer ei ole tuettu. Käytä nykyaikaista selainta, kuten Firefoxia, Chromea, Edgeä tai Safaria."
+  },
   "notFound": {
     "message": "Sivua ei löytynyt.",
     "home": "Etusivulle"
