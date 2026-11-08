@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, sql } from "drizzle-orm";
+import { count, eq, inArray, sql } from "drizzle-orm";
 import type { Db } from "./db/client";
 import { planes } from "./db/schema";
 import { generatePlane } from "./generatePlane";

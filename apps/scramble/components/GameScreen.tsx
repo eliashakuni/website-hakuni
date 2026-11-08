@@ -31,6 +31,17 @@ export function GameScreen() {
   const listRef = useRef<HTMLUListElement>(null);
   const pendingFlight = useRef<{ from: DOMRect; fontSize: string } | null>(null);
 
+  // Next keeps hidden pages mounted (Activity): don't carry a half-built word or an open
+  // menu over into the next game.
+  useLayoutEffect(
+    () => () => {
+      setPath([]);
+      setMenuOpen(false);
+      pendingFlight.current = null;
+    },
+    [],
+  );
+
   const hydrated = state !== null;
   const hasGame = game !== null;
   const finished = game?.finished ?? false;

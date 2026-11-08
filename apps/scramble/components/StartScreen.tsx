@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useGame } from "@/lib/game/useGame";
 import { LANGUAGES } from "@/lib/languages";
@@ -15,6 +15,10 @@ export function StartScreen() {
   const { lang, state, store } = useGame();
   // Keeps the screen stable, and stops a spare plane being fetched, while navigating away.
   const [starting, setStarting] = useState(false);
+
+  // Next keeps hidden pages mounted (Activity), so clear this when the page is hidden,
+  // or the button stays disabled when the player comes back for another round.
+  useLayoutEffect(() => () => setStarting(false), []);
 
   const hydrated = state !== null;
   const planeReady = Boolean(state?.nextPlane);

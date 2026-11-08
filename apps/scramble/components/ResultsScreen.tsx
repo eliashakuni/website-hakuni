@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { dictionaryUrl, gradeKey, guessPoints, totalScore } from "@/lib/game/rules";
 import { useGame } from "@/lib/game/useGame";
@@ -17,6 +17,9 @@ export function ResultsScreen() {
   const { lang, state, store } = useGame();
   const game = state?.game ?? null;
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Next keeps hidden pages mounted (Activity), so close the menu when leaving.
+  useLayoutEffect(() => () => setMenuOpen(false), []);
 
   const hydrated = state !== null;
   const hasGame = game !== null;
