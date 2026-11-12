@@ -57,6 +57,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: IE_BLOCK_CSS }} />
+        {/* Not app/favicon.ico: Next remounts generated metadata on every navigation, and
+            browsers re-request the icon each time its tag is re-added. */}
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
       </head>
       <body className="min-h-full font-semibold">
         <p className="ie-notice">{t("internetExplorer")}</p>
