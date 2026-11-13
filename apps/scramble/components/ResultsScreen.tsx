@@ -29,8 +29,7 @@ export function ResultsScreen() {
     if (!hydrated) return;
     if (!hasGame) router.replace("/");
     else if (!finished) router.replace("/game");
-    else store.loadNextPlane(); // The likely next step is a new game.
-  }, [hydrated, hasGame, finished, router, store]);
+  }, [hydrated, hasGame, finished, router]);
 
   if (!game) return null;
 
