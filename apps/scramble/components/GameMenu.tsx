@@ -19,6 +19,14 @@ export function GameMenu({ gameRunning, onClose, onNewGame, onShowResults }: Gam
   const [confirming, setConfirming] = useState<"results" | "newGame" | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
+  // These actions change the route, and the view transition snapshots the page as it is
+  // when navigation starts. Closing in the same update keeps the menu out of that snapshot,
+  // so it vanishes at once instead of lingering over the slide.
+  const closeThen = (action: () => void) => () => {
+    onClose();
+    action();
+  };
+
   useEffect(() => {
     dialogRef.current?.showModal();
   }, []);
@@ -38,7 +46,7 @@ export function GameMenu({ gameRunning, onClose, onNewGame, onShowResults }: Gam
           <>
             <button
               className={MENU_BUTTON}
-              onClick={() => (gameRunning ? setConfirming("newGame") : onNewGame())}
+              onClick={() => (gameRunning ? setConfirming("newGame") : closeThen(onNewGame)())}
             >
               {t("newGame")}
             </button>
@@ -56,7 +64,7 @@ export function GameMenu({ gameRunning, onClose, onNewGame, onShowResults }: Gam
             <p>{t(confirming === "results" ? "confirmResults" : "confirmNewGame")}</p>
             <button
               className={MENU_BUTTON}
-              onClick={confirming === "results" ? onShowResults : onNewGame}
+              onClick={closeThen(confirming === "results" ? onShowResults : onNewGame)}
             >
               {t(confirming === "results" ? "results" : "newGame")}
             </button>
