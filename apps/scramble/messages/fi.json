@@ -17,6 +17,7 @@
     "words": "Sanat: {found}/{total}",
     "timeLeft": "Aikaa jäljellä",
     "board": "Pelilauta",
+    "clear": "Tyhjennä sana",
     "guesses": "Arvaukset"
   },
   "results": {

@@ -54,6 +54,21 @@ export function GameScreen() {
     else if (finished) router.replace("/results");
   }, [hydrated, hasGame, finished, router]);
 
+  // Backspace removes the last letter and Escape the whole word. The menu is a modal
+  // dialog that uses Escape to close itself, so the keys are left alone while it is open.
+  useEffect(() => {
+    if (menuOpen || finished) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === "Backspace") setPath((current) => current.slice(0, -1));
+      else if (event.key === "Escape") setPath([]);
+      else return;
+      event.preventDefault();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen, finished]);
+
   useLayoutEffect(() => {
     const flight = pendingFlight.current;
     if (!flight || !latestGuess || !listRef.current) return;
@@ -118,10 +133,20 @@ export function GameScreen() {
         </ul>
       </div>
 
-      <div className="area-word flex items-center justify-center rounded-2xl border-4 border-panel bg-word-bar">
+      <div className="area-word relative flex items-center justify-center rounded-2xl border-4 border-panel bg-word-bar">
         <p ref={wordRef} aria-live="polite" className="text-3xl leading-none sm:text-4xl">
           {word}
         </p>
+        {path.length > 0 ? (
+          <button
+            aria-label={t("clear")}
+            title={t("clear")}
+            className="absolute inset-y-0 right-0 flex aspect-square items-center justify-center text-3xl leading-none text-ink-soft transition-colors hover:text-ink sm:text-4xl"
+            onClick={() => setPath([])}
+          >
+            ×
+          </button>
+        ) : null}
       </div>
 
       <Board plane={game.plane} label={t("board")} path={path} onTileClick={handleTileClick} />
