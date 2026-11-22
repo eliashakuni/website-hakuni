@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Let certificate renewals (Let's Encrypt / AutoSSL) through over plain HTTP
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+
+# Send http:// and hakuni.se without www to https://www.hakuni.se, in one permanent redirect
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.hakuni.se%{REQUEST_URI} [L,R=301]
+
+# Show our own page for addresses that don't exist
+ErrorDocument 404 /404.html

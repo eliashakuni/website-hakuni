@@ -47,7 +47,7 @@ function inlineEntryScripts(): Plugin {
   };
 }
 
-// Two static pages: Swedish at / and English at /en/
+// Two static pages, Swedish at / and English at /en/, plus a shared 404 page
 export default defineConfig({
   plugins: [inlineEntryScripts()],
   build: {
@@ -57,6 +57,7 @@ export default defineConfig({
       input: {
         sv: resolve(import.meta.dirname, 'index.html'),
         en: resolve(import.meta.dirname, 'en/index.html'),
+        notFound: resolve(import.meta.dirname, '404.html'),
       },
     },
   },

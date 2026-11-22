@@ -21,10 +21,12 @@ In a monorepo, put this folder under e.g. `apps/hakuni-site` and run the scripts
 ```
 index.html          Swedish page
 en/index.html       English page
+404.html            shared not-found page (Swedish with an English note)
 src/main.ts         imports fonts and CSS, sets the year in the footer
 src/styles.css      all styles; colours and fonts are CSS variables at the top
 public/img/         project screenshots
 public/favicon.svg  icon
+public/CV.pdf       CV, linked from both pages
 vite.config.ts      tells Vite to build both pages
 ```
 
@@ -34,7 +36,8 @@ The two HTML files have the same structure. If you change the layout, change bot
 
 1. `npm run build`
 2. Upload the **contents** of `dist/` to the web root of www.hakuni.se, so that `dist/index.html` ends up at `/` and `dist/en/index.html` at `/en/`.
-3. Upload the CV as `CV.pdf` (exactly that name, upper case) to the web root. Both pages link to `https://www.hakuni.se/CV.pdf`.
+3. `public/.htaccess` tells LiteSpeed/Apache to use `404.html` for missing pages. It replaces any `.htaccess` already in the web root, so put any rules your host needs in this file too.
+4. The CV lives in `public/CV.pdf` (exactly that name, upper case), so it ends up in `dist/` with everything else. Both pages link to `https://www.hakuni.se/CV.pdf`.
 
 ## Notes
 
