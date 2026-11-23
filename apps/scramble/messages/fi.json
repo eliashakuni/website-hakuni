@@ -9,7 +9,45 @@
     "newGame": "Uusi peli",
     "loadFailed": "Pelilaudan lataaminen epäonnistui.",
     "retry": "Yritä uudelleen",
-    "language": "Kieli"
+    "language": "Kieli",
+    "rulesButton": "Säännöt"
+  },
+  "rules": {
+    "title": "Näin pelaat",
+    "close": "Sulje",
+    "intro": "Etsi 4 × 4 kirjaimen ruudukosta niin monta sanaa kuin ehdit {minutes} minuutissa.",
+    "build": {
+      "title": "Sanojen muodostaminen",
+      "neighbours": "Muodosta sana painamalla kirjaimia yksi kerrallaan. Jokaisen uuden kirjaimen täytyy olla edellisen vieressä: sivulla, ylä- tai alapuolella tai vinottain.",
+      "neighboursCaption": "<w>O</w>:n jälkeen voit valita minkä tahansa vihreällä merkityistä kirjaimista, mutta et haaleita.",
+      "validCaption": "<w>TALO</w> käy: jokainen kirjain on edellisen vieressä, myös silloin kun siirrytään vinottain.",
+      "noJumps": "Ruutujen yli ei voi hypätä.",
+      "jumpCaption": "<w>SUO</w> ei käy: <w>O</w> ei ole <w>U</w>:n vieressä.",
+      "once": "Samaa ruutua voi käyttää vain kerran samassa sanassa.",
+      "reuseCaption": "<w>OLO</w> ei käy: laudalla on vain yksi <w>O</w>, eikä samaa ruutua voi käyttää kahdesti.",
+      "length": "Sanassa täytyy olla vähintään {minLength} kirjainta.",
+      "baseForm": "Vain perusmuodot kelpaavat: <w>talo</w> on oikein, mutta <w>taloja</w> ja <w>talossa</w> eivät."
+    },
+    "controls": {
+      "title": "Ohjaus",
+      "undo": "Voit poistaa viimeisen kirjaimen painamalla sitä uudelleen.",
+      "clear": "Sanakentän rasti tyhjentää koko sanan. Näppäimistöllä <key>Backspace</key> poistaa viimeisen kirjaimen ja <key>Esc</key> tyhjentää sanan.",
+      "send": "Kun sana on valmis, paina <b>Lähetä</b>. Painike toimii, kun sanassa on vähintään {minLength} kirjainta.",
+      "blocked": "Jos painat kirjainta, jota ei voi valita, mitään ei tapahdu."
+    },
+    "scoring": {
+      "title": "Pisteet",
+      "correct": "Oikeasta sanasta saa sitä enemmän pisteitä, mitä pidempi se on. Pisteet kaksinkertaistuvat jokaisesta kirjaimesta:",
+      "letters": "Kirjaimia",
+      "points": "Pisteet",
+      "wrong": "Sana, jota ei ole sanalistassa, vähentää yhtä monta pistettä kuin siinä on kirjaimia. Väärä {length} kirjaimen sana antaa siis {points} pistettä.",
+      "repeat": "Jos lähetät sanan, jonka olet jo arvannut, mitään ei tapahdu."
+    },
+    "time": {
+      "title": "Aika ja tulos",
+      "end": "Aikaa on {minutes} minuuttia. Kun aika loppuu, näet tuloksesi ja kaikki laudalta löytyvät sanat linkkeineen sanakirjaan.",
+      "grade": "Arvosana riippuu siitä, kuinka suuren osan laudan mahdollisista pisteistä sait. Asteikko on ”{lowest}”–”{highest}”."
+    }
   },
   "game": {
     "send": "Lähetä",

@@ -9,7 +9,45 @@
     "newGame": "Nytt spel",
     "loadFailed": "Spelplanen kunde inte laddas.",
     "retry": "Försök igen",
-    "language": "Språk"
+    "language": "Språk",
+    "rulesButton": "Regler"
+  },
+  "rules": {
+    "title": "Så spelar du",
+    "close": "Stäng",
+    "intro": "Hitta så många ord du kan i rutnätet med 4 × 4 bokstäver innan {minutes} minuter har gått.",
+    "build": {
+      "title": "Bygg ord",
+      "neighbours": "Tryck på bokstäverna en i taget för att bygga ett ord. Varje ny bokstav måste ligga bredvid den förra: åt sidan, uppåt, nedåt eller snett.",
+      "neighboursCaption": "Efter <w>D</w> kan du välja någon av de grönmarkerade bokstäverna, men inte de bleka.",
+      "validCaption": "<w>HUND</w> går bra: varje bokstav ligger bredvid den förra, även när steget går snett.",
+      "noJumps": "Du kan inte hoppa över rutor.",
+      "jumpCaption": "<w>DUK</w> går inte: <w>K</w> ligger inte bredvid <w>U</w>.",
+      "once": "Varje ruta får bara användas en gång i samma ord.",
+      "reuseCaption": "<w>KOK</w> går inte: det finns bara ett <w>K</w>, och samma ruta kan inte användas två gånger.",
+      "length": "Ett ord måste ha minst {minLength} bokstäver.",
+      "baseForm": "Bara grundformen räknas: <w>hund</w> är rätt, men inte <w>hundar</w> eller <w>hunden</w>."
+    },
+    "controls": {
+      "title": "Kontroller",
+      "undo": "Tryck på den senaste bokstaven igen för att ta bort den.",
+      "clear": "Krysset i ordfältet tömmer hela ordet. Med tangentbord tar <key>Backspace</key> bort den senaste bokstaven och <key>Esc</key> tömmer ordet.",
+      "send": "Tryck på <b>Skicka</b> när ordet är klart. Knappen fungerar när ordet har minst {minLength} bokstäver.",
+      "blocked": "Om du trycker på en bokstav som inte går att välja händer ingenting."
+    },
+    "scoring": {
+      "title": "Poäng",
+      "correct": "Ett rätt ord ger fler poäng ju längre det är. Poängen fördubblas för varje bokstav:",
+      "letters": "Bokstäver",
+      "points": "Poäng",
+      "wrong": "Ett ord som inte finns i ordlistan ger lika många minuspoäng som det har bokstäver. Ett felaktigt ord med {length} bokstäver ger alltså {points} poäng.",
+      "repeat": "Om du skickar ett ord som du redan har gissat händer ingenting."
+    },
+    "time": {
+      "title": "Tid och resultat",
+      "end": "Du har {minutes} minuter. När tiden är slut ser du ditt resultat och alla ord som gick att hitta, med länkar till ordboken.",
+      "grade": "Betyget beror på hur stor del av spelplanens möjliga poäng du fick, från ”{lowest}” till ”{highest}”."
+    }
   },
   "game": {
     "send": "Skicka",

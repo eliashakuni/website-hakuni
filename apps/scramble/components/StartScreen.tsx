@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useGame } from "@/lib/game/useGame";
 import { LANGUAGES } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
+import { RulesDialog } from "./RulesDialog";
 
 const LANGUAGE_NAMES = { fi: "Suomi", sv: "Svenska" } as const;
 
@@ -15,10 +16,17 @@ export function StartScreen() {
   const { lang, state, store } = useGame();
   // Keeps the screen stable, and stops a spare plane being fetched, while navigating away.
   const [starting, setStarting] = useState(false);
+  const [rulesOpen, setRulesOpen] = useState(false);
 
-  // Next keeps hidden pages mounted (Activity), so clear this when the page is hidden,
+  // Next keeps hidden pages mounted (Activity), so clear these when the page is hidden,
   // or the button stays disabled when the player comes back for another round.
-  useLayoutEffect(() => () => setStarting(false), []);
+  useLayoutEffect(
+    () => () => {
+      setStarting(false);
+      setRulesOpen(false);
+    },
+    [],
+  );
 
   const hydrated = state !== null;
   const planeReady = Boolean(state?.nextPlane);
@@ -68,6 +76,14 @@ export function StartScreen() {
         </button>
       )}
 
+      {/* Outlined rather than solid, so it reads as secondary next to the play button. */}
+      <button
+        className="rounded-2xl border-2 border-white/35 px-6 py-2 text-xl text-white/80 transition-colors hover:border-white/70 hover:bg-white/10 hover:text-white"
+        onClick={() => setRulesOpen(true)}
+      >
+        {t("rulesButton")}
+      </button>
+
       <nav aria-label={t("language")} className="flex gap-2">
         {LANGUAGES.map((language) => (
           <Link
@@ -81,6 +97,8 @@ export function StartScreen() {
           </Link>
         ))}
       </nav>
+
+      {rulesOpen ? <RulesDialog lang={lang} onClose={() => setRulesOpen(false)} /> : null}
     </main>
   );
 }
