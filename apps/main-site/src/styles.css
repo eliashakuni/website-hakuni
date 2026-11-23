@@ -232,11 +232,26 @@ a {
   gap: 40px 72px;
 }
 
+.about__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.about__photo {
+  /* Leave room for the yellow offset block so it never overflows the column */
+  width: calc(100% - 14px);
+  max-width: 340px;
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 14px 14px 0 var(--yellow);
+}
+
 .about__skills {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-top: 21px;
 }
 
 .eyebrow {
