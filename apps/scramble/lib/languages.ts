@@ -1,4 +1,4 @@
-export const LANGUAGES = ["fi", "sv"] as const;
+export const LANGUAGES = ["fi", "sv", "en"] as const;
 export type Language = (typeof LANGUAGES)[number];
 
 export function isLanguage(value: unknown): value is Language {

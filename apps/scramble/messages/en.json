@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "description": "Find as many words as you can in three minutes."
+  },
+  "start": {
+    "play": "Start",
+    "loading": "Loading...",
+    "continue": "Continue game",
+    "newGame": "New game",
+    "loadFailed": "The board couldn't be loaded.",
+    "retry": "Try again",
+    "language": "Language",
+    "rulesButton": "Rules"
+  },
+  "rules": {
+    "title": "How to play",
+    "close": "Close",
+    "intro": "Find as many words as you can in the 4 × 4 grid of letters before {minutes} minutes are up.",
+    "build": {
+      "title": "Building words",
+      "neighbours": "Build a word by pressing letters one at a time. Each new letter must be next to the previous one: beside it, above or below it, or diagonally.",
+      "neighboursCaption": "After <w>T</w> you can pick any of the letters marked in green, but not the faded ones.",
+      "validCaption": "<w>CART</w> works: every letter is next to the previous one, including the diagonal step.",
+      "noJumps": "You can't jump over tiles.",
+      "jumpCaption": "<w>TAN</w> doesn't work: <w>N</w> isn't next to <w>A</w>.",
+      "once": "Each tile can only be used once in the same word.",
+      "reuseCaption": "<w>NUN</w> doesn't work: there's only one <w>N</w> on the board, and the same tile can't be used twice.",
+      "length": "A word must have at least {minLength} letters.",
+      "baseForm": "Only base forms count: <w>cart</w> is fine, but <w>carts</w> and <w>carting</w> aren't."
+    },
+    "controls": {
+      "title": "Controls",
+      "undo": "To remove the last letter, press it again.",
+      "clear": "The cross in the word field clears the whole word. On a keyboard, <key>Backspace</key> removes the last letter and <key>Esc</key> clears the word.",
+      "send": "When the word is ready, press <b>Send</b>. The button works once the word has at least {minLength} letters.",
+      "blocked": "If you press a letter that can't be picked, nothing happens."
+    },
+    "scoring": {
+      "title": "Scoring",
+      "correct": "The longer a correct word is, the more points it's worth. The points double with every letter:",
+      "letters": "Letters",
+      "points": "Points",
+      "wrong": "A word that isn't in the word list takes away as many points as it has letters. So a wrong {length}-letter word gives {points} points.",
+      "repeat": "If you send a word you've already guessed, nothing happens."
+    },
+    "time": {
+      "title": "Time and result",
+      "end": "You have {minutes} minutes. When time runs out, you'll see your result and every word on the board, with links to the dictionary.",
+      "grade": "Your grade depends on how much of the board's available points you got. The scale goes from “{lowest}” to “{highest}”."
+    }
+  },
+  "game": {
+    "send": "Send",
+    "points": "Points: {score}/{max}",
+    "words": "Words: {found}/{total}",
+    "timeLeft": "Time left",
+    "board": "Board",
+    "clear": "Clear word",
+    "guesses": "Guesses"
+  },
+  "results": {
+    "grade": "Result: {grade}",
+    "words": "Word list",
+    "board": "Board"
+  },
+  "grades": {
+    "0": "dismal",
+    "1": "poor",
+    "2": "tolerable",
+    "3": "passable",
+    "4": "fair",
+    "5": "good",
+    "6": "very good",
+    "7": "excellent",
+    "8": "elite",
+    "9": "genius",
+    "perfect": "ahem?"
+  },
+  "menu": {
+    "open": "Menu",
+    "newGame": "New game",
+    "results": "Results",
+    "cancel": "Cancel",
+    "confirmResults": "Are you sure you want to end the current game and see the results?",
+    "confirmNewGame": "Are you sure you want to start a new game? The current game will end."
+  },
+  "browser": {
+    "outdated": "Your browser is out of date, so the game might not work properly. Please update your browser.",
+    "dismiss": "Close",
+    "internetExplorer": "Internet Explorer isn't supported. Please use a modern browser such as Firefox, Chrome, Edge or Safari."
+  },
+  "notFound": {
+    "message": "Page not found.",
+    "home": "Go to the home page"
+  }
+}

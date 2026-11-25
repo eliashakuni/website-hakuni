@@ -15,6 +15,13 @@
       "when": 1793707278838,
       "tag": "0001_rename_se_to_sv",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795617847322,
+      "tag": "0002_add_en_and_slugs",
+      "breakpoints": true
     }
   ]
 }

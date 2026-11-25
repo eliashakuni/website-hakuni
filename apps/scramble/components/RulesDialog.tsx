@@ -73,6 +73,29 @@ const EXAMPLES: Record<Language, Example> = {
       { row: 1, col: 1 },
     ],
   },
+  en: {
+    rows: ["caps", "rtol", "nuie", "bdmg"],
+    current: { row: 1, col: 1 },
+    // CART
+    valid: [
+      { row: 0, col: 0 },
+      { row: 0, col: 1 },
+      { row: 1, col: 0 },
+      { row: 1, col: 1 },
+    ],
+    // TAN: N is two rows away from A.
+    jump: [
+      { row: 1, col: 1 },
+      { row: 0, col: 1 },
+      { row: 2, col: 0 },
+    ],
+    // NUN: back to the only N.
+    reuse: [
+      { row: 2, col: 0 },
+      { row: 2, col: 1 },
+      { row: 2, col: 0 },
+    ],
+  },
 };
 
 const SCORE_LENGTHS = [3, 4, 5, 6, 7, 8];

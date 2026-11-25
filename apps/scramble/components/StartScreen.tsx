@@ -8,7 +8,7 @@ import { LANGUAGES } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
 import { RulesDialog } from "./RulesDialog";
 
-const LANGUAGE_NAMES = { fi: "Suomi", sv: "Svenska" } as const;
+const LANGUAGE_NAMES = { fi: "Suomi", sv: "Svenska", en: "English" } as const;
 
 export function StartScreen() {
   const t = useTranslations("start");

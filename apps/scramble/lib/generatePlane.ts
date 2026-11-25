@@ -1,4 +1,4 @@
-import { hasLongerWordWithPrefix, hasWord } from "./binarySearch";
+import { hasLongerWordWithPrefix, hasWord, lowerBound } from "./binarySearch";
 import { getDictionary } from "./dictionary";
 import type { Language } from "./languages";
 import { MIN_WORD_LENGTH } from "./game/rules";
@@ -7,12 +7,15 @@ import { randomLetter } from "./letters";
 export interface Plane {
   plane: string[][];
   wordList: string[];
+  /** Dictionary lookup keys, parallel to `wordList`; only for languages that have them. */
+  slugList?: string[];
   tries: number;
   points: number;
 }
 
 const SIZE = 4;
-const MIN_POINTS: Record<Language, number> = { fi: 7000, sv: 5000 };
+// TODO: tune "en" once the real English word list is in.
+const MIN_POINTS: Record<Language, number> = { fi: 7000, sv: 5000, en: 5000 };
 // The PHP version looped forever; keep the best attempt if the cap is hit.
 const MAX_TRIES = 500;
 
@@ -60,7 +63,7 @@ function countPoints(words: Iterable<string>): number {
 }
 
 export function generatePlane(lang: Language): Plane {
-  const dictionary = getDictionary(lang);
+  const { words: dictionary, slugs } = getDictionary(lang);
   let best = { plane: [] as string[][], words: new Set<string>(), points: -1 };
   let tries = 0;
 
@@ -74,9 +77,13 @@ export function generatePlane(lang: Language): Plane {
     if (points >= MIN_POINTS[lang]) break;
   }
 
+  const wordList = [...best.words].sort();
   return {
     plane: best.plane,
-    wordList: [...best.words].sort(),
+    wordList,
+    ...(slugs && {
+      slugList: wordList.map((word) => slugs[lowerBound(dictionary, word)]),
+    }),
     tries,
     points: best.points,
   };

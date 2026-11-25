@@ -4,6 +4,8 @@ import { GAME_DURATION_MS, type Guess } from "./rules";
 export interface Game {
   plane: string[][];
   wordList: string[];
+  /** Parallel to `wordList`, when the language has dictionary slugs. */
+  slugList?: string[];
   maxPoints: number;
   guesses: Guess[];
   /** Epoch ms. An absolute time, so a reload can't pause or reset the clock. */
@@ -26,13 +28,14 @@ export const EMPTY_STATE: GameState = {
 
 export function startGame(state: GameState, now: number): GameState {
   if (!state.nextPlane) return state;
-  const { plane, wordList, points } = state.nextPlane;
+  const { plane, wordList, slugList, points } = state.nextPlane;
   return {
     ...state,
     nextPlane: null,
     game: {
       plane,
       wordList,
+      slugList,
       maxPoints: points,
       guesses: [],
       deadline: now + GAME_DURATION_MS,

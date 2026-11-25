@@ -42,11 +42,13 @@ export function gradeKey(score: number, maxPoints: number): GradeKey {
   return String(Math.max(0, Math.floor(ratio * 10))) as GradeKey;
 }
 
-const DICTIONARY_URLS: Record<Language, (word: string) => string> = {
+const DICTIONARY_URLS: Record<Language, (slug: string) => string> = {
   fi: (word) => `https://www.kielitoimistonsanakirja.fi/#/${word}?searchMode=all`,
   sv: (word) => `https://svenska.se/?q=${word}&exactMatch=true&activeTab=saol`,
+  en: (slug) => `https://dictionary.cambridge.org/dictionary/english/${slug}`,
 };
 
-export function dictionaryUrl(lang: Language, word: string): string {
-  return DICTIONARY_URLS[lang](encodeURIComponent(word));
+/** Links to the word's dictionary entry, using its slug when the language has one. */
+export function dictionaryUrl(lang: Language, word: string, slug?: string): string {
+  return DICTIONARY_URLS[lang](encodeURIComponent(slug ?? word));
 }
