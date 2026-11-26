@@ -159,18 +159,21 @@
   margin-inline: auto;
   container-type: size;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
+  /* Tiles per side; Board sets it from the plane. */
+  --side: 4;
+  grid-template-columns: repeat(var(--side), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--side), minmax(0, 1fr));
   /* Not cqw: on the container itself that would measure the viewport, not the board. */
-  gap: calc(var(--board-size) * 0.025);
+  gap: calc(var(--board-size) * 0.1 / var(--side));
 }
 
+/* Sized for a 4×4 board and scaled down as tiles get smaller. */
 .tile {
   font-family: var(--font-tile);
-  font-size: 13cqw;
+  font-size: calc(13cqw * 4 / var(--side));
   line-height: 1;
-  border-width: 1.6cqw;
-  border-radius: 5cqw;
+  border-width: calc(1.6cqw * 4 / var(--side));
+  border-radius: calc(5cqw * 4 / var(--side));
   text-transform: uppercase;
   transition:
     transform 150ms ease-out,

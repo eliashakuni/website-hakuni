@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { isAdjacent, type Position, samePosition } from "@/lib/game/rules";
 
 const TILE_STATES = {
@@ -27,7 +28,12 @@ interface BoardProps {
 
 export function Board({ plane, label, path = [], onTileClick }: BoardProps) {
   return (
-    <div className="board area-board" role="group" aria-label={label}>
+    <div
+      className="board area-board"
+      role="group"
+      aria-label={label}
+      style={{ "--side": plane.length } as CSSProperties}
+    >
       {plane.flatMap((letters, row) =>
         letters.map((letter, col) => {
           const position = { row, col };

@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
+import { BOARD_DIMENSIONS, BOARD_SIZES } from "@/lib/boardSizes";
+import { setBoardSize } from "@/lib/game/boardSizePreference";
 import { useGame } from "@/lib/game/useGame";
 import { LANGUAGES } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
@@ -13,7 +15,7 @@ const LANGUAGE_NAMES = { fi: "Suomi", sv: "Svenska", en: "English" } as const;
 export function StartScreen() {
   const t = useTranslations("start");
   const router = useRouter();
-  const { lang, state, store } = useGame();
+  const { lang, size, state, store } = useGame();
   // Keeps the screen stable, and stops a spare plane being fetched, while navigating away.
   const [starting, setStarting] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
@@ -46,6 +48,26 @@ export function StartScreen() {
   return (
     <main className="flex w-full flex-col items-center gap-8 px-4">
       <h1 className="font-tile text-5xl text-white sm:text-6xl">Scramble</h1>
+
+      <div role="radiogroup" aria-label={t("boardSize")} className="flex gap-2">
+        {BOARD_SIZES.map((option) => (
+          <button
+            key={option}
+            role="radio"
+            aria-checked={option === size}
+            disabled={starting}
+            onClick={() => setBoardSize(option)}
+            className={`flex flex-col items-center rounded-2xl px-4 py-1 transition-colors hover:text-white ${
+              option === size ? "bg-white/15 text-white" : "text-white/80"
+            }`}
+          >
+            <span>{t(`sizes.${option}`)}</span>
+            <span className="text-sm opacity-75">
+              {BOARD_DIMENSIONS[option]} × {BOARD_DIMENSIONS[option]}
+            </span>
+          </button>
+        ))}
+      </div>
 
       {resumable && !starting ? (
         <Link href="/game" className={buttonClass("px-8 py-3 text-2xl sm:text-3xl")}>
@@ -98,7 +120,11 @@ export function StartScreen() {
         ))}
       </nav>
 
-      {rulesOpen ? <RulesDialog lang={lang} onClose={() => setRulesOpen(false)} /> : null}
+      {rulesOpen ? <RulesDialog
+          lang={lang}
+          side={BOARD_DIMENSIONS[size]}
+          onClose={() => setRulesOpen(false)}
+        /> : null}
     </main>
   );
 }

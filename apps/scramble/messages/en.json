@@ -10,12 +10,18 @@
     "loadFailed": "The board couldn't be loaded.",
     "retry": "Try again",
     "language": "Language",
-    "rulesButton": "Rules"
+    "rulesButton": "Rules",
+    "boardSize": "Board size",
+    "sizes": {
+      "standard": "Standard",
+      "large": "Large",
+      "huge": "Huge"
+    }
   },
   "rules": {
     "title": "How to play",
     "close": "Close",
-    "intro": "Find as many words as you can in the 4 × 4 grid of letters before {minutes} minutes are up.",
+    "intro": "Find as many words as you can in the {side} × {side} grid of letters before {minutes} minutes are up.",
     "build": {
       "title": "Building words",
       "neighbours": "Build a word by pressing letters one at a time. Each new letter must be next to the previous one: beside it, above or below it, or diagonally.",

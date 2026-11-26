@@ -1,4 +1,4 @@
-// Requires fi-all-words.json and sv-all-words.json
+// Requires fi-all-words.json, sv-all-words.json and en-all-words.json
 //
 // Writes, for each language:
 //   [language]/[size]/words.json    – words that fit on a board of that size, sorted
@@ -11,10 +11,11 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 const LANGUAGES = ["fi", "sv", "en"];
 
+// Tiles per side. Keep in sync with BOARD_DIMENSIONS in lib/boardSizes.ts.
 const BOARD_SIZES = {
-  standard: 5,
-  large: 6,
-  huge: 7,
+  standard: 4,
+  large: 5,
+  huge: 6,
 };
 
 const LONGEST_WORDS_MIN = 3000;
@@ -89,10 +90,11 @@ async function main() {
     const sortedWords = Array.from(words).sort();
 
     for (const [name, size] of Object.entries(BOARD_SIZES)) {
+      // A word can use every tile once, so it can be at most size² letters long.
       const maxLength = size * size;
       const dir = `${language}/${name}`;
 
-      const boardWords = sortedWords.filter((word) => word.length < maxLength);
+      const boardWords = sortedWords.filter((word) => word.length <= maxLength);
 
       await mkdir(dir, { recursive: true });
       await writeJson(`${dir}/words.json`, boardWords);

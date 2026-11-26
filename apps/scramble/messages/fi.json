@@ -10,12 +10,18 @@
     "loadFailed": "Pelilaudan lataaminen epäonnistui.",
     "retry": "Yritä uudelleen",
     "language": "Kieli",
-    "rulesButton": "Säännöt"
+    "rulesButton": "Säännöt",
+    "boardSize": "Pelilaudan koko",
+    "sizes": {
+      "standard": "Tavallinen",
+      "large": "Iso",
+      "huge": "Valtava"
+    }
   },
   "rules": {
     "title": "Näin pelaat",
     "close": "Sulje",
-    "intro": "Etsi 4 × 4 kirjaimen ruudukosta niin monta sanaa kuin ehdit {minutes} minuutissa.",
+    "intro": "Etsi {side} × {side} kirjaimen ruudukosta niin monta sanaa kuin ehdit {minutes} minuutissa.",
     "build": {
       "title": "Sanojen muodostaminen",
       "neighbours": "Muodosta sana painamalla kirjaimia yksi kerrallaan. Jokaisen uuden kirjaimen täytyy olla edellisen vieressä: sivulla, ylä- tai alapuolella tai vinottain.",

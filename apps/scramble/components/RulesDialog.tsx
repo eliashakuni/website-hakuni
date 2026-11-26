@@ -127,10 +127,12 @@ function Figure({ board, children }: { board: ReactNode; children: ReactNode }) 
 
 interface RulesDialogProps {
   lang: Language;
+  /** Tiles per side of the board the player has chosen. */
+  side: number;
   onClose: () => void;
 }
 
-export function RulesDialog({ lang, onClose }: RulesDialogProps) {
+export function RulesDialog({ lang, side, onClose }: RulesDialogProps) {
   const t = useTranslations("rules");
   const tGrades = useTranslations("grades");
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -168,7 +170,7 @@ export function RulesDialog({ lang, onClose }: RulesDialogProps) {
         </header>
 
         <div className="flex flex-col gap-7 overflow-y-auto px-5 py-5 leading-relaxed">
-          <p>{t("intro", { minutes: GAME_DURATION_MS / 60_000 })}</p>
+          <p>{t("intro", { side, minutes: GAME_DURATION_MS / 60_000 })}</p>
 
           <Section title={t("build.title")}>
             <p>{t("build.neighbours")}</p>

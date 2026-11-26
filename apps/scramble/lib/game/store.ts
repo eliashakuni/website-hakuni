@@ -1,3 +1,4 @@
+import type { BoardSize } from "../boardSizes";
 import type { Plane } from "../generatePlane";
 import type { Language } from "../languages";
 import {
@@ -10,16 +11,19 @@ import {
   startGame,
 } from "./state";
 
-/** One store per language, so each language keeps its own game in sessionStorage. */
+/** One store per language and board size, so each keeps its own game in sessionStorage. */
 export class GameStore {
   private state: GameState | null = null;
   private listeners = new Set<() => void>();
   private planeRequest: Promise<void> | null = null;
 
-  constructor(private readonly lang: Language) {}
+  constructor(
+    private readonly lang: Language,
+    private readonly size: BoardSize,
+  ) {}
 
   private get storageKey() {
-    return `scramble:${this.lang}:v1`;
+    return `scramble:${this.lang}:${this.size}:v1`;
   }
 
   private load(): GameState {
@@ -63,7 +67,7 @@ export class GameStore {
     if (this.getState().nextPlane || this.planeRequest) return;
     this.set({ ...this.getState(), planeLoadFailed: false });
 
-    this.planeRequest = fetch(`/api/plane?lang=${this.lang}`)
+    this.planeRequest = fetch(`/api/plane?lang=${this.lang}&size=${this.size}`)
       .then((response) => {
         if (!response.ok) throw new Error(`Plane request failed: ${response.status}`);
         return response.json() as Promise<Plane>;
@@ -79,13 +83,14 @@ export class GameStore {
   };
 }
 
-const stores = new Map<Language, GameStore>();
+const stores = new Map<string, GameStore>();
 
-export function getGameStore(lang: Language): GameStore {
-  let store = stores.get(lang);
+export function getGameStore(lang: Language, size: BoardSize): GameStore {
+  const key = `${lang}:${size}`;
+  let store = stores.get(key);
   if (!store) {
-    store = new GameStore(lang);
-    stores.set(lang, store);
+    store = new GameStore(lang, size);
+    stores.set(key, store);
   }
   return store;
 }

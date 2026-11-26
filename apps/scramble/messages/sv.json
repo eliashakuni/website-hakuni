@@ -10,12 +10,18 @@
     "loadFailed": "Spelplanen kunde inte laddas.",
     "retry": "Försök igen",
     "language": "Språk",
-    "rulesButton": "Regler"
+    "rulesButton": "Regler",
+    "boardSize": "Spelplanens storlek",
+    "sizes": {
+      "standard": "Standard",
+      "large": "Stor",
+      "huge": "Jättestor"
+    }
   },
   "rules": {
     "title": "Så spelar du",
     "close": "Stäng",
-    "intro": "Hitta så många ord du kan i rutnätet med 4 × 4 bokstäver innan {minutes} minuter har gått.",
+    "intro": "Hitta så många ord du kan i rutnätet med {side} × {side} bokstäver innan {minutes} minuter har gått.",
     "build": {
       "title": "Bygg ord",
       "neighbours": "Tryck på bokstäverna en i taget för att bygga ett ord. Varje ny bokstav måste ligga bredvid den förra: åt sidan, uppåt, nedåt eller snett.",
