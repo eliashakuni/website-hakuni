@@ -19,8 +19,9 @@ export const planes = pgTable(
     language: languageEnum("language").notNull(),
     plane: jsonb("plane").$type<string[][]>().notNull(),
     wordList: jsonb("word_list").$type<string[]>().notNull(),
-    // Parallel to word_list; null for languages without dictionary slugs.
-    slugList: jsonb("slug_list").$type<string[]>(),
+    // Word -> dictionary slug for the words in word_list that need one;
+    // null for languages without dictionary slugs.
+    slugs: jsonb("slugs").$type<Record<string, string>>(),
     tries: integer("tries").notNull(),
     points: integer("points").notNull(),
     status: planeStatusEnum("status").notNull().default("ready"),

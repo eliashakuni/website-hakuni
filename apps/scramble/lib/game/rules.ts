@@ -45,7 +45,7 @@ export function gradeKey(score: number, maxPoints: number): GradeKey {
 const DICTIONARY_URLS: Record<Language, (slug: string) => string> = {
   fi: (word) => `https://www.kielitoimistonsanakirja.fi/#/${word}?searchMode=all`,
   sv: (word) => `https://svenska.se/?q=${word}&exactMatch=true&activeTab=saol`,
-  en: (slug) => `https://dictionary.cambridge.org/dictionary/english/${slug}`,
+  en: (slug) => `https://www.dictionary.com/browse/${slug}`,
 };
 
 /** Links to the word's dictionary entry, using its slug when the language has one. */

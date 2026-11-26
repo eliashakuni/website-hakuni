@@ -1,7 +1,9 @@
 // Requires fi-all-words.json and sv-all-words.json
 //
 // Writes, for each language:
-//   [language]/[size]/words.json    – words that fit on a board of that size
+//   [language]/[size]/words.json    – words that fit on a board of that size, sorted
+//                                     by UTF-16 code unit (plain .sort()), the order
+//                                     the game's binary search expects
 //   [language]/[size]/letters.json  – cumulative letter frequencies of those words
 //   [language]/longest-words.json   – at least LONGEST_WORDS_MIN of the longest words
 
@@ -75,8 +77,6 @@ const longestWords = (words, min) => {
 
 async function main() {
   for (const language of LANGUAGES) {
-    const collator = new Intl.Collator(language);
-
     const words = JSON.parse(
       await readFile(`${language}-all-words.json`, "utf8"),
     );
@@ -84,8 +84,9 @@ async function main() {
     console.log(`Processing language: ${language}`);
     console.log(`Total words: ${words.length}`);
 
-    // Sort according to the language's alphabetical order
-    const sortedWords = Array.from(words).sort(collator.compare);
+    // Code-unit order, not the language's alphabetical order: the game binary-searches
+    // these with < and ===, which would miss words if e.g. å sorted before ä.
+    const sortedWords = Array.from(words).sort();
 
     for (const [name, size] of Object.entries(BOARD_SIZES)) {
       const maxLength = size * size;
@@ -103,9 +104,7 @@ async function main() {
       );
     }
 
-    const longest = longestWords(words, LONGEST_WORDS_MIN).sort(
-      collator.compare,
-    );
+    const longest = longestWords(words, LONGEST_WORDS_MIN).sort();
     const shortestIncluded = Math.min(...longest.map((word) => word.length));
 
     await writeJson(`${language}/longest-words.json`, longest);

@@ -23,7 +23,7 @@ export async function GET(request: Request) {
         result = {
           plane: claimed.plane,
           wordList: claimed.wordList,
-          ...(claimed.slugList && { slugList: claimed.slugList }),
+          ...(claimed.slugs && { slugs: claimed.slugs }),
           tries: claimed.tries,
           points: claimed.points,
         };

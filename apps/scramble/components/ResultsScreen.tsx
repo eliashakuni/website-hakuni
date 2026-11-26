@@ -35,7 +35,6 @@ export function ResultsScreen() {
 
   const collator = new Intl.Collator(lang);
   const words = [...game.wordList].sort(collator.compare);
-  const slugs = new Map(game.slugList?.map((slug, i) => [game.wordList[i], slug]));
   const incorrectGuesses = game.guesses.filter((guess) => !guess.correct);
   const grade = tGrades(gradeKey(totalScore(game.guesses), game.maxPoints));
 
@@ -55,7 +54,7 @@ export function ResultsScreen() {
             return (
               <li key={word} className={`flex justify-between gap-2 ${guess ? "text-correct" : ""}`}>
                 <a
-                  href={dictionaryUrl(lang, word, slugs.get(word))}
+                  href={dictionaryUrl(lang, word, game.slugs?.[word])}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="truncate hover:underline"

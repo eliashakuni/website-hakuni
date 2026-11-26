@@ -1,4 +1,4 @@
-import { hasLongerWordWithPrefix, hasWord, lowerBound } from "./binarySearch";
+import { hasLongerWordWithPrefix, hasWord } from "./binarySearch";
 import { getDictionary } from "./dictionary";
 import type { Language } from "./languages";
 import { MIN_WORD_LENGTH } from "./game/rules";
@@ -7,8 +7,8 @@ import { randomLetter } from "./letters";
 export interface Plane {
   plane: string[][];
   wordList: string[];
-  /** Dictionary lookup keys, parallel to `wordList`; only for languages that have them. */
-  slugList?: string[];
+  /** Dictionary lookup keys for the words in `wordList` that need one (word -> slug). */
+  slugs?: Record<string, string>;
   tries: number;
   points: number;
 }
@@ -62,6 +62,17 @@ function countPoints(words: Iterable<string>): number {
   return points;
 }
 
+function pickSlugs(
+  words: readonly string[],
+  slugs: Readonly<Record<string, string>>,
+): Record<string, string> {
+  const picked: Record<string, string> = {};
+  for (const word of words) {
+    if (Object.hasOwn(slugs, word)) picked[word] = slugs[word];
+  }
+  return picked;
+}
+
 export function generatePlane(lang: Language): Plane {
   const { words: dictionary, slugs } = getDictionary(lang);
   let best = { plane: [] as string[][], words: new Set<string>(), points: -1 };
@@ -77,13 +88,11 @@ export function generatePlane(lang: Language): Plane {
     if (points >= MIN_POINTS[lang]) break;
   }
 
-  const wordList = [...best.words].sort();
+  const wordList = [...best.words].sort(new Intl.Collator(lang).compare);
   return {
     plane: best.plane,
     wordList,
-    ...(slugs && {
-      slugList: wordList.map((word) => slugs[lowerBound(dictionary, word)]),
-    }),
+    ...(slugs && { slugs: pickSlugs(wordList, slugs) }),
     tries,
     points: best.points,
   };

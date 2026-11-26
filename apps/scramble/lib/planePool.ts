@@ -45,13 +45,13 @@ async function claimStaleRow(db: Db, lang: Language) {
 }
 
 export async function regenerateRow(db: Db, id: string, lang: Language) {
-  const { plane, wordList, slugList, tries, points } = generatePlane(lang);
+  const { plane, wordList, slugs, tries, points } = generatePlane(lang);
   await db
     .update(planes)
     .set({
       plane,
       wordList,
-      slugList: slugList ?? null,
+      slugs: slugs ?? null,
       tries,
       points,
       status: "ready",

@@ -22,6 +22,13 @@
       "when": 1795617847322,
       "tag": "0002_add_en_and_slugs",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795692376807,
+      "tag": "0003_slugs_map",
+      "breakpoints": true
     }
   ]
 }
