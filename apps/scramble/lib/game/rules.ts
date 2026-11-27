@@ -1,7 +1,6 @@
 import type { Language } from "../languages";
 
 export const MIN_WORD_LENGTH = 3;
-export const GAME_DURATION_MS = 180_000;
 
 export interface Guess {
   word: string;

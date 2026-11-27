@@ -1,4 +1,5 @@
 import { type BoardSize, DEFAULT_BOARD_SIZE, isBoardSize } from "../boardSizes";
+import { DEFAULT_GAME_DURATION, type GameDuration, isGameDuration } from "../gameDurations";
 import { DEFAULT_GAME_MODE, type GameMode, isGameMode } from "../gameModes";
 
 /** A choice remembered between visits, readable with useSyncExternalStore. */
@@ -62,4 +63,10 @@ export const gameModePreference: Preference<GameMode> = createPreference(
   "scramble:gameMode",
   isGameMode,
   DEFAULT_GAME_MODE,
+);
+
+export const gameDurationPreference: Preference<GameDuration> = createPreference(
+  "scramble:gameDuration",
+  isGameDuration,
+  DEFAULT_GAME_DURATION,
 );

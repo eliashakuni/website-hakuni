@@ -2,12 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useRef } from "react";
-import {
-  GAME_DURATION_MS,
-  guessPoints,
-  MIN_WORD_LENGTH,
-  type Position,
-} from "@/lib/game/rules";
+import { GAME_DURATION_MINUTES, GAME_DURATIONS } from "@/lib/gameDurations";
+import { guessPoints, MIN_WORD_LENGTH, type Position } from "@/lib/game/rules";
 import type { Language } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
 import { ExampleBoard } from "./ExampleBoard";
@@ -129,10 +125,12 @@ interface RulesDialogProps {
   lang: Language;
   /** Tiles per side of the board the player has chosen. */
   side: number;
+  /** Length of the game the player has chosen. */
+  minutes: number;
   onClose: () => void;
 }
 
-export function RulesDialog({ lang, side, onClose }: RulesDialogProps) {
+export function RulesDialog({ lang, side, minutes, onClose }: RulesDialogProps) {
   const t = useTranslations("rules");
   const tGrades = useTranslations("grades");
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -170,7 +168,7 @@ export function RulesDialog({ lang, side, onClose }: RulesDialogProps) {
         </header>
 
         <div className="flex flex-col gap-7 overflow-y-auto px-5 py-5 leading-relaxed">
-          <p>{t("intro", { side, minutes: GAME_DURATION_MS / 60_000 })}</p>
+          <p>{t("intro", { side, minutes })}</p>
 
           <Section title={t("build.title")}>
             <p>{t("build.neighbours")}</p>
@@ -244,7 +242,12 @@ export function RulesDialog({ lang, side, onClose }: RulesDialogProps) {
           </Section>
 
           <Section title={t("time.title")}>
-            <p>{t("time.end", { minutes: GAME_DURATION_MS / 60_000 })}</p>
+            <p>{t("time.end", { minutes })}</p>
+            <p>
+              {t("time.choose", {
+                options: GAME_DURATIONS.map((option) => GAME_DURATION_MINUTES[option]).join(", "),
+              })}
+            </p>
             <p>{t("time.grade", { lowest: tGrades("0"), highest: tGrades("9") })}</p>
           </Section>
 

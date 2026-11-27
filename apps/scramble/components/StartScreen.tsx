@@ -4,8 +4,13 @@ import { useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { BOARD_DIMENSIONS, BOARD_SIZES } from "@/lib/boardSizes";
+import { GAME_DURATION_MINUTES, GAME_DURATIONS } from "@/lib/gameDurations";
 import { GAME_MODES } from "@/lib/gameModes";
-import { boardSizePreference, gameModePreference } from "@/lib/game/preferences";
+import {
+  boardSizePreference,
+  gameDurationPreference,
+  gameModePreference,
+} from "@/lib/game/preferences";
 import { useGame } from "@/lib/game/useGame";
 import { LANGUAGES } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
@@ -21,7 +26,7 @@ const optionClass = (selected: boolean) =>
 export function StartScreen() {
   const t = useTranslations("start");
   const router = useRouter();
-  const { lang, size, mode, state, store } = useGame();
+  const { lang, size, mode, duration, state, store } = useGame();
   // Keeps the screen stable, and stops a spare plane being fetched, while navigating away.
   const [starting, setStarting] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
@@ -47,7 +52,7 @@ export function StartScreen() {
 
   const start = () => {
     setStarting(true);
-    store.start();
+    store.start(duration);
     router.push("/game");
   };
 
@@ -86,6 +91,24 @@ export function StartScreen() {
             >
               <span>{t(`modes.${option}.name`)}</span>
               <span className="text-sm opacity-75">{t(`modes.${option}.description`)}</span>
+            </button>
+          ))}
+        </div>
+
+        <div role="radiogroup" aria-label={t("gameDuration")} className="flex flex-wrap justify-center gap-2">
+          {GAME_DURATIONS.map((option) => (
+            <button
+              key={option}
+              role="radio"
+              aria-checked={option === duration}
+              disabled={starting}
+              onClick={() => gameDurationPreference.set(option)}
+              className={optionClass(option === duration)}
+            >
+              <span>{t(`durations.${option}`)}</span>
+              <span className="text-sm opacity-75">
+                {t("durationMinutes", { minutes: GAME_DURATION_MINUTES[option] })}
+              </span>
             </button>
           ))}
         </div>
@@ -145,6 +168,7 @@ export function StartScreen() {
       {rulesOpen ? <RulesDialog
           lang={lang}
           side={BOARD_DIMENSIONS[size]}
+          minutes={GAME_DURATION_MINUTES[duration]}
           onClose={() => setRulesOpen(false)}
         /> : null}
     </main>

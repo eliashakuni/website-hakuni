@@ -27,7 +27,15 @@
         "name": "Långt ord",
         "description": "Ett långt ord gömt"
       }
-    }
+    },
+    "gameDuration": "Speltid",
+    "durations": {
+      "quick": "Snabb",
+      "standard": "Standard",
+      "long": "Lång",
+      "veryLong": "Mycket lång"
+    },
+    "durationMinutes": "{minutes} min"
   },
   "rules": {
     "title": "Så spelar du",
@@ -63,6 +71,7 @@
     "time": {
       "title": "Tid och resultat",
       "end": "Du har {minutes} minuter. När tiden är slut ser du ditt resultat och alla ord som gick att hitta, med länkar till ordboken.",
+      "choose": "Du kan ändra speltiden på startsidan ({options} minuter).",
       "grade": "Betyget beror på hur stor del av spelplanens möjliga poäng du fick, från ”{lowest}” till ”{highest}”."
     },
     "longWord": {

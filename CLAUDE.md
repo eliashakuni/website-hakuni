@@ -38,7 +38,8 @@ Next config of note (`next.config.ts`): `cacheComponents`, `partialPrefetching`,
 ### Game rules (`lib/game/rules.ts`)
 - Board sizes: `standard` 4×4, `large` 5×5, `huge` 6×6 (`lib/boardSizes.ts`).
 - Words are paths through adjacent tiles (8 directions), each tile used once, at least `MIN_WORD_LENGTH` = 3 letters.
-- 3-minute game (`GAME_DURATION_MS`). A correct word scores `2^length`, a wrong guess `-length`.
+- Game length (`lib/gameDurations.ts`): `quick` 2 min, `standard` 3 min, `long` 5 min, `veryLong` 8 min. It only sets the deadline when a game starts, so it isn't part of the store key, the plane API or the DB, and every length shares the same boards. The choice is kept in `localStorage` like size and mode.
+- A correct word scores `2^length`, a wrong guess `-length`.
 - Grades are 10% bands of the board's maximum points, plus a "perfect" grade.
 - Game modes (`lib/gameModes.ts`): `standard` (all tiles random) and `longWord` (one long word from `longest-words.json` hidden along a random path, the rest random). In `longWord` mode the found long word is pinned in gold above the guess and results lists, and the stats panel says whether it was found.
 

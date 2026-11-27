@@ -27,7 +27,15 @@
         "name": "Pitkä sana",
         "description": "Yksi pitkä sana piilossa"
       }
-    }
+    },
+    "gameDuration": "Pelin kesto",
+    "durations": {
+      "quick": "Nopea",
+      "standard": "Tavallinen",
+      "long": "Pitkä",
+      "veryLong": "Hyvin pitkä"
+    },
+    "durationMinutes": "{minutes} min"
   },
   "rules": {
     "title": "Näin pelaat",
@@ -63,6 +71,7 @@
     "time": {
       "title": "Aika ja tulos",
       "end": "Aikaa on {minutes} minuuttia. Kun aika loppuu, näet tuloksesi ja kaikki laudalta löytyvät sanat linkkeineen sanakirjaan.",
+      "choose": "Pelin keston voi vaihtaa aloitusnäkymässä ({options} minuuttia).",
       "grade": "Arvosana riippuu siitä, kuinka suuren osan laudan mahdollisista pisteistä sait. Asteikko on ”{lowest}”–”{highest}”."
     },
     "longWord": {

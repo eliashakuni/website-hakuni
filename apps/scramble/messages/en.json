@@ -27,7 +27,15 @@
         "name": "Long word",
         "description": "One long word hidden"
       }
-    }
+    },
+    "gameDuration": "Game length",
+    "durations": {
+      "quick": "Quick",
+      "standard": "Standard",
+      "long": "Long",
+      "veryLong": "Very long"
+    },
+    "durationMinutes": "{minutes} min"
   },
   "rules": {
     "title": "How to play",
@@ -63,6 +71,7 @@
     "time": {
       "title": "Time and result",
       "end": "You have {minutes} minutes. When time runs out, you'll see your result and every word on the board, with links to the dictionary.",
+      "choose": "You can change the game length on the start screen ({options} minutes).",
       "grade": "Your grade depends on how much of the board's available points you got. The scale goes from “{lowest}” to “{highest}”."
     },
     "longWord": {

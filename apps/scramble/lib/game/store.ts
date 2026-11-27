@@ -1,4 +1,5 @@
 import type { BoardSize } from "../boardSizes";
+import { type GameDuration, gameDurationMs } from "../gameDurations";
 import type { GameMode } from "../gameModes";
 import type { Plane } from "../generatePlane";
 import type { Language } from "../languages";
@@ -12,7 +13,11 @@ import {
   startGame,
 } from "./state";
 
-/** One store per language, board size and game mode, each with its own game in sessionStorage. */
+/**
+ * One store per language, board size and game mode, each with its own game in sessionStorage.
+ * The duration isn't part of the key: it doesn't change the board, and a started game keeps
+ * its own deadline.
+ */
 export class GameStore {
   private state: GameState | null = null;
   private listeners = new Set<() => void>();
@@ -59,7 +64,8 @@ export class GameStore {
     };
   };
 
-  start = () => this.set(startGame(this.getState(), Date.now()));
+  start = (duration: GameDuration) =>
+    this.set(startGame(this.getState(), Date.now(), gameDurationMs(duration)));
   guess = (word: string) => this.set(addGuess(this.getState(), word));
   finish = () => this.set(finishGame(this.getState()));
   abandon = () => this.set(abandonGame(this.getState()));

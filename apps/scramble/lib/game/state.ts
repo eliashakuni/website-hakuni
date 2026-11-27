@@ -1,5 +1,5 @@
 import type { Plane } from "../generatePlane";
-import { GAME_DURATION_MS, type Guess } from "./rules";
+import { type Guess } from "./rules";
 
 export interface Game {
   plane: string[][];
@@ -28,7 +28,7 @@ export const EMPTY_STATE: GameState = {
   planeLoadFailed: false,
 };
 
-export function startGame(state: GameState, now: number): GameState {
+export function startGame(state: GameState, now: number, durationMs: number): GameState {
   if (!state.nextPlane) return state;
   const { plane, wordList, slugs, points, longWord } = state.nextPlane;
   return {
@@ -41,7 +41,7 @@ export function startGame(state: GameState, now: number): GameState {
       maxPoints: points,
       longWord,
       guesses: [],
-      deadline: now + GAME_DURATION_MS,
+      deadline: now + durationMs,
       finished: false,
     },
   };
