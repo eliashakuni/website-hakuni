@@ -35,7 +35,11 @@
       "long": "Pitkä",
       "veryLong": "Hyvin pitkä"
     },
-    "durationMinutes": "{minutes} min"
+    "durationMinutes": "{minutes} min",
+    "settings": "Asetukset",
+    "changeSettings": "Muuta asetuksia",
+    "done": "Valmis",
+    "close": "Sulje"
   },
   "rules": {
     "title": "Näin pelaat",
@@ -71,7 +75,7 @@
     "time": {
       "title": "Aika ja tulos",
       "end": "Aikaa on {minutes} minuuttia. Kun aika loppuu, näet tuloksesi ja kaikki laudalta löytyvät sanat linkkeineen sanakirjaan.",
-      "choose": "Pelin keston voi vaihtaa aloitusnäkymässä ({options} minuuttia).",
+      "choose": "Pelin keston voi vaihtaa aloitusnäkymän asetuksista ({options} minuuttia).",
       "grade": "Arvosana riippuu siitä, kuinka suuren osan laudan mahdollisista pisteistä sait. Asteikko on ”{lowest}”–”{highest}”."
     },
     "longWord": {

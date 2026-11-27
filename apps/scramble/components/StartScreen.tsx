@@ -3,25 +3,15 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
-import { BOARD_DIMENSIONS, BOARD_SIZES } from "@/lib/boardSizes";
-import { GAME_DURATION_MINUTES, GAME_DURATIONS } from "@/lib/gameDurations";
-import { GAME_MODES } from "@/lib/gameModes";
-import {
-  boardSizePreference,
-  gameDurationPreference,
-  gameModePreference,
-} from "@/lib/game/preferences";
+import { BOARD_DIMENSIONS } from "@/lib/boardSizes";
+import { GAME_DURATION_MINUTES } from "@/lib/gameDurations";
 import { useGame } from "@/lib/game/useGame";
 import { LANGUAGES } from "@/lib/languages";
 import { buttonClass } from "./buttonClass";
 import { RulesDialog } from "./RulesDialog";
+import { SettingsDialog } from "./SettingsDialog";
 
 const LANGUAGE_NAMES = { fi: "Suomi", sv: "Svenska", en: "English" } as const;
-
-const optionClass = (selected: boolean) =>
-  `flex flex-col items-center rounded-2xl px-4 py-1 transition-colors hover:text-white ${
-    selected ? "bg-white/15 text-white" : "text-white/80"
-  }`;
 
 export function StartScreen() {
   const t = useTranslations("start");
@@ -30,6 +20,7 @@ export function StartScreen() {
   // Keeps the screen stable, and stops a spare plane being fetched, while navigating away.
   const [starting, setStarting] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Next keeps hidden pages mounted (Activity), so clear these when the page is hidden,
   // or the button stays disabled when the player comes back for another round.
@@ -37,6 +28,7 @@ export function StartScreen() {
     () => () => {
       setStarting(false);
       setRulesOpen(false);
+      setSettingsOpen(false);
     },
     [],
   );
@@ -50,6 +42,13 @@ export function StartScreen() {
     if (hydrated && !starting && !planeReady && !failed) store.loadNextPlane();
   }, [hydrated, starting, planeReady, failed, store]);
 
+  const side = BOARD_DIMENSIONS[size];
+  const summary = [
+    `${side} × ${side}`,
+    t(`modes.${mode}.name`),
+    t("durationMinutes", { minutes: GAME_DURATION_MINUTES[duration] }),
+  ].join(" · ");
+
   const start = () => {
     setStarting(true);
     store.start(duration);
@@ -60,59 +59,19 @@ export function StartScreen() {
     <main className="flex w-full flex-col items-center gap-8 px-4">
       <h1 className="font-tile text-5xl text-white sm:text-6xl">Scramble</h1>
 
-      <div className="flex flex-col items-center gap-3">
-        <div role="radiogroup" aria-label={t("boardSize")} className="flex gap-2">
-          {BOARD_SIZES.map((option) => (
-            <button
-              key={option}
-              role="radio"
-              aria-checked={option === size}
-              disabled={starting}
-              onClick={() => boardSizePreference.set(option)}
-              className={optionClass(option === size)}
-            >
-              <span>{t(`sizes.${option}`)}</span>
-              <span className="text-sm opacity-75">
-                {BOARD_DIMENSIONS[option]} × {BOARD_DIMENSIONS[option]}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        <div role="radiogroup" aria-label={t("gameMode")} className="flex gap-2">
-          {GAME_MODES.map((option) => (
-            <button
-              key={option}
-              role="radio"
-              aria-checked={option === mode}
-              disabled={starting}
-              onClick={() => gameModePreference.set(option)}
-              className={optionClass(option === mode)}
-            >
-              <span>{t(`modes.${option}.name`)}</span>
-              <span className="text-sm opacity-75">{t(`modes.${option}.description`)}</span>
-            </button>
-          ))}
-        </div>
-
-        <div role="radiogroup" aria-label={t("gameDuration")} className="flex flex-wrap justify-center gap-2">
-          {GAME_DURATIONS.map((option) => (
-            <button
-              key={option}
-              role="radio"
-              aria-checked={option === duration}
-              disabled={starting}
-              onClick={() => gameDurationPreference.set(option)}
-              className={optionClass(option === duration)}
-            >
-              <span>{t(`durations.${option}`)}</span>
-              <span className="text-sm opacity-75">
-                {t("durationMinutes", { minutes: GAME_DURATION_MINUTES[option] })}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <button
+        disabled={starting}
+        onClick={() => setSettingsOpen(true)}
+        aria-label={`${t("changeSettings")}: ${summary}`}
+        title={t("changeSettings")}
+        className="flex items-center gap-3 rounded-full px-5 py-2 text-lg text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+      >
+        <span>{summary}</span>
+        {/* A cog, the usual sign for settings. */}
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5 fill-current">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z" />
+        </svg>
+      </button>
 
       {resumable && !starting ? (
         <Link href="/game" className={buttonClass("px-8 py-3 text-2xl sm:text-3xl")}>
@@ -165,12 +124,23 @@ export function StartScreen() {
         ))}
       </nav>
 
-      {rulesOpen ? <RulesDialog
+      {rulesOpen ? (
+        <RulesDialog
           lang={lang}
-          side={BOARD_DIMENSIONS[size]}
+          side={side}
           minutes={GAME_DURATION_MINUTES[duration]}
           onClose={() => setRulesOpen(false)}
-        /> : null}
+        />
+      ) : null}
+
+      {settingsOpen ? (
+        <SettingsDialog
+          size={size}
+          mode={mode}
+          duration={duration}
+          onClose={() => setSettingsOpen(false)}
+        />
+      ) : null}
     </main>
   );
 }

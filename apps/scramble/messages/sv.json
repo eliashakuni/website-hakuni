@@ -35,7 +35,11 @@
       "long": "Lång",
       "veryLong": "Mycket lång"
     },
-    "durationMinutes": "{minutes} min"
+    "durationMinutes": "{minutes} min",
+    "settings": "Inställningar",
+    "changeSettings": "Ändra inställningar",
+    "done": "Klar",
+    "close": "Stäng"
   },
   "rules": {
     "title": "Så spelar du",
@@ -71,7 +75,7 @@
     "time": {
       "title": "Tid och resultat",
       "end": "Du har {minutes} minuter. När tiden är slut ser du ditt resultat och alla ord som gick att hitta, med länkar till ordboken.",
-      "choose": "Du kan ändra speltiden på startsidan ({options} minuter).",
+      "choose": "Du kan ändra speltiden i inställningarna på startsidan ({options} minuter).",
       "grade": "Betyget beror på hur stor del av spelplanens möjliga poäng du fick, från ”{lowest}” till ”{highest}”."
     },
     "longWord": {
