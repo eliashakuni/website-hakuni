@@ -239,6 +239,10 @@ export function RulesDialog({ lang, side, onClose }: RulesDialogProps) {
             <p>{t("scoring.repeat")}</p>
           </Section>
 
+          <Section title={t("longWord.title")}>
+            <p>{t("longWord.text")}</p>
+          </Section>
+
           <Section title={t("time.title")}>
             <p>{t("time.end", { minutes: GAME_DURATION_MS / 60_000 })}</p>
             <p>{t("time.grade", { lowest: tGrades("0"), highest: tGrades("9") })}</p>

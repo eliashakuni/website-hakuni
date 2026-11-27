@@ -5,7 +5,10 @@
 //                                     by UTF-16 code unit (plain .sort()), the order
 //                                     the game's binary search expects
 //   [language]/[size]/letters.json  – cumulative letter frequencies of those words
-//   [language]/longest-words.json   – at least LONGEST_WORDS_MIN of the longest words
+//   [language]/[size]/longest-words.json – the longest words that fit on that board
+//                                     size, for the long-word game mode: at least
+//                                     LONGEST_WORDS_MIN of them, and every word down to
+//                                     LONG_WORD_SPAN letters shorter than the tile count
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 
@@ -19,6 +22,12 @@ const BOARD_SIZES = {
 };
 
 const LONGEST_WORDS_MIN = 3000;
+
+// The long-word list always reaches this many letters below the tile count, even when
+// there are LONGEST_WORDS_MIN longer words: down to 14 letters on 4×4, 23 on 5×5 and
+// 34 on 6×6. Otherwise e.g. Finnish 4×4 would only get 16-letter words, which fill the
+// whole board.
+const LONG_WORD_SPAN = 2;
 
 const writeJson = (path, data) =>
   writeFile(path, JSON.stringify(data, null, 2) + "\n", "utf8");
@@ -56,15 +65,19 @@ const countLetters = (words) => {
   };
 };
 
-// Takes whole length groups, longest first, until there are at least `min`
-// words, so the cut-off depends only on word length, never on alphabetical order.
-const longestWords = (words, min) => {
+// Takes whole length groups, longest first, until there are at least `min` words and
+// every word of at least `minLength` letters is in, so the cut-off depends only on word
+// length, never on alphabetical order.
+const longestWords = (words, min, minLength) => {
   const byLengthDesc = Array.from(words).sort((a, b) => b.length - a.length);
 
   const result = [];
   let i = 0;
 
-  while (i < byLengthDesc.length && result.length < min) {
+  while (
+    i < byLengthDesc.length &&
+    (result.length < min || byLengthDesc[i].length >= minLength)
+  ) {
     const length = byLengthDesc[i].length;
 
     while (i < byLengthDesc.length && byLengthDesc[i].length === length) {
@@ -104,17 +117,22 @@ async function main() {
         `  ${name} (${size}×${size}): saved ${boardWords.length} words to ${dir}/words.json ` +
           `(filtered out ${words.length - boardWords.length}).`,
       );
+
+      // The long-word mode hides one of these on the board, so they must fit it too.
+      const longest = longestWords(
+        boardWords,
+        LONGEST_WORDS_MIN,
+        maxLength - LONG_WORD_SPAN,
+      ).sort();
+      const shortestIncluded = Math.min(...longest.map((word) => word.length));
+
+      await writeJson(`${dir}/longest-words.json`, longest);
+
+      console.log(
+        `    Saved ${longest.length} longest words (${shortestIncluded}–${maxLength} letters) ` +
+          `to ${dir}/longest-words.json.`,
+      );
     }
-
-    const longest = longestWords(words, LONGEST_WORDS_MIN).sort();
-    const shortestIncluded = Math.min(...longest.map((word) => word.length));
-
-    await writeJson(`${language}/longest-words.json`, longest);
-
-    console.log(
-      `  Saved ${longest.length} longest words (${shortestIncluded}+ letters) ` +
-        `to ${language}/longest-words.json.`,
-    );
   }
 }
 

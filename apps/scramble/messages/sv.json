@@ -16,6 +16,17 @@
       "standard": "Standard",
       "large": "Stor",
       "huge": "Jättestor"
+    },
+    "gameMode": "Spelläge",
+    "modes": {
+      "standard": {
+        "name": "Vanligt",
+        "description": "Slumpade bokstäver"
+      },
+      "longWord": {
+        "name": "Långt ord",
+        "description": "Ett långt ord gömt"
+      }
     }
   },
   "rules": {
@@ -53,6 +64,10 @@
       "title": "Tid och resultat",
       "end": "Du har {minutes} minuter. När tiden är slut ser du ditt resultat och alla ord som gick att hitta, med länkar till ordboken.",
       "grade": "Betyget beror på hur stor del av spelplanens möjliga poäng du fick, från ”{lowest}” till ”{highest}”."
+    },
+    "longWord": {
+      "title": "Läget Långt ord",
+      "text": "I läget Långt ord är ett mycket långt ord gömt på spelplanen, och resten av rutorna slumpas som vanligt. Alla ord räknas, men eftersom poängen fördubblas för varje bokstav är det långa ordet oftast värt mer än alla andra ord på spelplanen tillsammans. När du hittar det lyser det i guld högst upp i din lista."
     }
   },
   "game": {
@@ -62,12 +77,16 @@
     "timeLeft": "Tid kvar",
     "board": "Spelplan",
     "clear": "Töm ordet",
-    "guesses": "Gissningar"
+    "guesses": "Gissningar",
+    "longWordSearching": "Långt ord ({length} bokstäver): inte hittat än",
+    "longWordFound": "Du hittade det långa ordet!",
+    "longWord": "Långt ord"
   },
   "results": {
     "grade": "Resultat: {grade}",
     "words": "Ordlista",
-    "board": "Spelplan"
+    "board": "Spelplan",
+    "longWordMissed": "Du hittade inte det långa ordet"
   },
   "grades": {
     "0": "usel",

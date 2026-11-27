@@ -36,6 +36,13 @@
       "when": 1795695669072,
       "tag": "0004_board_sizes",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795706266395,
+      "tag": "0005_game_modes",
+      "breakpoints": true
     }
   ]
 }

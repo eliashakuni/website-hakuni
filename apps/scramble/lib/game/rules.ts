@@ -33,6 +33,11 @@ export function foundWordCount(guesses: readonly Guess[]): number {
   return guesses.filter((guess) => guess.correct).length;
 }
 
+/** Long-word mode: whether the hidden long word has been found. */
+export function foundLongWord(longWord: string, guesses: readonly Guess[]): boolean {
+  return guesses.some((guess) => guess.correct && guess.word === longWord);
+}
+
 export type GradeKey = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "perfect";
 
 /** Grades are 10% bands of the available points; a perfect game gets its own joke grade. */

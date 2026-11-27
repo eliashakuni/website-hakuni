@@ -1,9 +1,10 @@
 import { after } from "next/server";
 import { BOARD_SIZES, DEFAULT_BOARD_SIZE, isBoardSize } from "@/lib/boardSizes";
 import { db as maybeDb } from "@/lib/db/client";
+import { DEFAULT_GAME_MODE, GAME_MODES, isGameMode } from "@/lib/gameModes";
 import { generatePlane, type Plane } from "@/lib/generatePlane";
 import { isLanguage, LANGUAGES } from "@/lib/languages";
-import { claimReadyRow, maintainPool, regenerateRow } from "@/lib/planePool";
+import { claimReadyRow, maintainPool, type PoolKey, regenerateRow } from "@/lib/planePool";
 
 // Background regeneration runs after the response, so allow time for it.
 export const maxDuration = 60;
@@ -22,12 +23,21 @@ export async function GET(request: Request) {
     );
   }
 
+  const mode = params.get("mode") ?? DEFAULT_GAME_MODE;
+  if (!isGameMode(mode)) {
+    return Response.json(
+      { error: `mode must be one of: ${GAME_MODES.join(", ")}` },
+      { status: 400 },
+    );
+  }
+
+  const key: PoolKey = { lang, size, mode };
   let result: Plane | undefined;
 
   const db = maybeDb;
   if (db) {
     try {
-      const claimed = await claimReadyRow(db, lang, size);
+      const claimed = await claimReadyRow(db, key);
       if (claimed) {
         result = {
           plane: claimed.plane,
@@ -35,15 +45,16 @@ export async function GET(request: Request) {
           ...(claimed.slugs && { slugs: claimed.slugs }),
           tries: claimed.tries,
           points: claimed.points,
+          ...(claimed.longWord && { longWord: claimed.longWord }),
         };
         after(() =>
-          regenerateRow(db, claimed.id, lang, size)
-            .then(() => maintainPool(db, lang, size))
+          regenerateRow(db, claimed.id, key)
+            .then(() => maintainPool(db, key))
             .catch((e) => console.error("plane regeneration failed", e)),
         );
       } else {
         after(() =>
-          maintainPool(db, lang, size).catch((e) => console.error("pool top-up failed", e)),
+          maintainPool(db, key).catch((e) => console.error("pool top-up failed", e)),
         );
       }
     } catch (e) {
@@ -51,6 +62,6 @@ export async function GET(request: Request) {
     }
   }
 
-  result ??= generatePlane(lang, size);
+  result ??= generatePlane(lang, size, mode);
   return Response.json(result);
 }

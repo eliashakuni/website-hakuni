@@ -7,6 +7,8 @@ export interface Game {
   /** Word -> dictionary slug, for the words that need one. */
   slugs?: Record<string, string>;
   maxPoints: number;
+  /** Long-word mode: the long word hidden on the board. */
+  longWord?: string;
   guesses: Guess[];
   /** Epoch ms. An absolute time, so a reload can't pause or reset the clock. */
   deadline: number;
@@ -28,7 +30,7 @@ export const EMPTY_STATE: GameState = {
 
 export function startGame(state: GameState, now: number): GameState {
   if (!state.nextPlane) return state;
-  const { plane, wordList, slugs, points } = state.nextPlane;
+  const { plane, wordList, slugs, points, longWord } = state.nextPlane;
   return {
     ...state,
     nextPlane: null,
@@ -37,6 +39,7 @@ export function startGame(state: GameState, now: number): GameState {
       wordList,
       slugs,
       maxPoints: points,
+      longWord,
       guesses: [],
       deadline: now + GAME_DURATION_MS,
       finished: false,

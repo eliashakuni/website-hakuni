@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-import { foundWordCount, totalScore } from "@/lib/game/rules";
+import { foundLongWord, foundWordCount, totalScore } from "@/lib/game/rules";
 import type { Game } from "@/lib/game/state";
 import { buttonClass } from "./buttonClass";
 import { panelClass } from "./panelClass";
@@ -17,6 +17,7 @@ interface StatsPanelProps {
 export function StatsPanel({ game, onOpenMenu, children }: StatsPanelProps) {
   const t = useTranslations("game");
   const tMenu = useTranslations("menu");
+  const tResults = useTranslations("results");
 
   return (
     <div className={`area-stats flex flex-col items-center justify-center gap-2 p-2 text-center ${panelClass}`}>
@@ -24,6 +25,17 @@ export function StatsPanel({ game, onOpenMenu, children }: StatsPanelProps) {
         <p>{t("points", { score: totalScore(game.guesses), max: game.maxPoints })}</p>
         {children}
         <p>{t("words", { found: foundWordCount(game.guesses), total: game.wordList.length })}</p>
+        {game.longWord ? (
+          foundLongWord(game.longWord, game.guesses) ? (
+            <p className="long-word mt-1 px-3 py-0.5">{t("longWordFound")}</p>
+          ) : (
+            <p className="mt-1 text-ink-soft">
+              {game.finished
+                ? tResults("longWordMissed")
+                : t("longWordSearching", { length: [...game.longWord].length })}
+            </p>
+          )
+        ) : null}
       </div>
       <button
         className={buttonClass("flex size-12 items-center justify-center sm:size-16")}

@@ -16,6 +16,17 @@
       "standard": "Tavallinen",
       "large": "Iso",
       "huge": "Valtava"
+    },
+    "gameMode": "Pelitila",
+    "modes": {
+      "standard": {
+        "name": "Tavallinen",
+        "description": "Satunnaiset kirjaimet"
+      },
+      "longWord": {
+        "name": "Pitkä sana",
+        "description": "Yksi pitkä sana piilossa"
+      }
     }
   },
   "rules": {
@@ -53,6 +64,10 @@
       "title": "Aika ja tulos",
       "end": "Aikaa on {minutes} minuuttia. Kun aika loppuu, näet tuloksesi ja kaikki laudalta löytyvät sanat linkkeineen sanakirjaan.",
       "grade": "Arvosana riippuu siitä, kuinka suuren osan laudan mahdollisista pisteistä sait. Asteikko on ”{lowest}”–”{highest}”."
+    },
+    "longWord": {
+      "title": "Pitkä sana -pelitila",
+      "text": "Pitkä sana -pelitilassa laudalle on piilotettu yksi hyvin pitkä sana, ja muut ruudut arvotaan tavalliseen tapaan. Kaikki sanat lasketaan, mutta koska pisteet kaksinkertaistuvat jokaisesta kirjaimesta, pitkä sana on yleensä arvokkaampi kuin kaikki muut laudan sanat yhteensä. Kun löydät sen, se syttyy kultaiseksi listasi kärkeen."
     }
   },
   "game": {
@@ -62,12 +77,16 @@
     "timeLeft": "Aikaa jäljellä",
     "board": "Pelilauta",
     "clear": "Tyhjennä sana",
-    "guesses": "Arvaukset"
+    "guesses": "Arvaukset",
+    "longWordSearching": "Pitkä sana ({length} kirjainta): ei vielä löydetty",
+    "longWordFound": "Löysit pitkän sanan!",
+    "longWord": "Pitkä sana"
   },
   "results": {
     "grade": "Tulos: {grade}",
     "words": "Sanalista",
-    "board": "Pelilauta"
+    "board": "Pelilauta",
+    "longWordMissed": "Pitkä sana jäi löytämättä"
   },
   "grades": {
     "0": "surkea",

@@ -1,9 +1,12 @@
 import { hasLongerWordWithPrefix, hasWord } from "./binarySearch";
 import { BOARD_DIMENSIONS, type BoardSize } from "./boardSizes";
 import { getDictionary } from "./dictionary";
+import type { GameMode } from "./gameModes";
 import type { Language } from "./languages";
 import { MIN_WORD_LENGTH } from "./game/rules";
 import { randomLetter } from "./letters";
+import { randomLongWord } from "./longWords";
+import { randomPath } from "./randomPath";
 
 export interface Plane {
   plane: string[][];
@@ -12,6 +15,8 @@ export interface Plane {
   slugs?: Record<string, string>;
   tries: number;
   points: number;
+  /** Long-word mode: the long word hidden on the board. Always in `wordList`. */
+  longWord?: string;
 }
 
 // The generator retries until a plane is worth at least this many points. Large and huge
@@ -34,6 +39,16 @@ function buildGrid(lang: Language, size: BoardSize): string[][] {
   return Array.from({ length: side }, () =>
     Array.from({ length: side }, () => randomLetter(lang, size)),
   );
+}
+
+/** A normal grid with `word` written along a random path of adjacent tiles. */
+function buildGridWithWord(lang: Language, size: BoardSize, word: string): string[][] {
+  const grid = buildGrid(lang, size);
+  const letters = [...word];
+  randomPath(grid.length, letters.length).forEach(({ row, col }, i) => {
+    grid[row][col] = letters[i];
+  });
+  return grid;
 }
 
 function findWords(grid: string[][], dictionary: readonly string[]): Set<string> {
@@ -83,8 +98,28 @@ function pickSlugs(
   return picked;
 }
 
-export function generatePlane(lang: Language, size: BoardSize): Plane {
-  const { words: dictionary, slugs } = getDictionary(lang, size);
+function toPlane(
+  lang: Language,
+  size: BoardSize,
+  plane: string[][],
+  words: Set<string>,
+  tries: number,
+  extra?: Pick<Plane, "longWord">,
+): Plane {
+  const { slugs } = getDictionary(lang, size);
+  const wordList = [...words].sort(new Intl.Collator(lang).compare);
+  return {
+    plane,
+    wordList,
+    ...(slugs && { slugs: pickSlugs(wordList, slugs) }),
+    tries,
+    points: countPoints(words),
+    ...extra,
+  };
+}
+
+function generateStandardPlane(lang: Language, size: BoardSize): Plane {
+  const { words: dictionary } = getDictionary(lang, size);
   let best = { plane: [] as string[][], words: new Set<string>(), points: -1 };
   let tries = 0;
 
@@ -98,12 +133,21 @@ export function generatePlane(lang: Language, size: BoardSize): Plane {
     if (points >= MIN_POINTS[size][lang]) break;
   }
 
-  const wordList = [...best.words].sort(new Intl.Collator(lang).compare);
-  return {
-    plane: best.plane,
-    wordList,
-    ...(slugs && { slugs: pickSlugs(wordList, slugs) }),
-    tries,
-    points: best.points,
-  };
+  return toPlane(lang, size, best.plane, best.words, tries);
+}
+
+// No retries for a points target: the long word alone (2^length) outweighs everything
+// else on the board many times over.
+function generateLongWordPlane(lang: Language, size: BoardSize): Plane {
+  const { words: dictionary } = getDictionary(lang, size);
+  const longWord = randomLongWord(lang, size);
+  const plane = buildGridWithWord(lang, size, longWord);
+  const words = findWords(plane, dictionary);
+  return toPlane(lang, size, plane, words, 1, { longWord });
+}
+
+export function generatePlane(lang: Language, size: BoardSize, mode: GameMode): Plane {
+  return mode === "longWord"
+    ? generateLongWordPlane(lang, size)
+    : generateStandardPlane(lang, size);
 }

@@ -16,6 +16,17 @@
       "standard": "Standard",
       "large": "Large",
       "huge": "Huge"
+    },
+    "gameMode": "Game mode",
+    "modes": {
+      "standard": {
+        "name": "Standard",
+        "description": "Random letters"
+      },
+      "longWord": {
+        "name": "Long word",
+        "description": "One long word hidden"
+      }
     }
   },
   "rules": {
@@ -53,6 +64,10 @@
       "title": "Time and result",
       "end": "You have {minutes} minutes. When time runs out, you'll see your result and every word on the board, with links to the dictionary.",
       "grade": "Your grade depends on how much of the board's available points you got. The scale goes from “{lowest}” to “{highest}”."
+    },
+    "longWord": {
+      "title": "Long word mode",
+      "text": "In long word mode, one very long word is hidden on the board, and the rest of the tiles are random as usual. Every word counts, but since the points double with every letter, the long word is usually worth more than everything else on the board put together. When you find it, it lights up in gold at the top of your list."
     }
   },
   "game": {
@@ -62,12 +77,16 @@
     "timeLeft": "Time left",
     "board": "Board",
     "clear": "Clear word",
-    "guesses": "Guesses"
+    "guesses": "Guesses",
+    "longWordSearching": "Long word ({length} letters): not found yet",
+    "longWordFound": "You found the long word!",
+    "longWord": "Long word"
   },
   "results": {
     "grade": "Result: {grade}",
     "words": "Word list",
-    "board": "Board"
+    "board": "Board",
+    "longWordMissed": "You didn't find the long word"
   },
   "grades": {
     "0": "dismal",
